@@ -3,7 +3,7 @@
 
 # ### Importing required libraries
 
-# In[1]:
+# In[49]:
 
 
 import pandas as pd
@@ -14,7 +14,7 @@ import seaborn as sns
 
 # ### Load the Dataset
 
-# In[2]:
+# In[50]:
 
 
 df = pd.read_csv('CAR DETAILS.csv')
@@ -22,13 +22,13 @@ df = pd.read_csv('CAR DETAILS.csv')
 
 # ### Display top 5 rows
 
-# In[3]:
+# In[51]:
 
 
 df.head()
 
 
-# In[4]:
+# In[52]:
 
 
 df["brand"] = df["name"].agg(str.split).str[0]
@@ -37,7 +37,7 @@ print(df["brand"].value_counts())
 
 # ### Checking the shape
 
-# In[5]:
+# In[53]:
 
 
 df.shape
@@ -45,7 +45,7 @@ df.shape
 
 # ### The dataset contains 4340 rows and 8 columns of customer information.
 
-# In[6]:
+# In[54]:
 
 
 df.columns
@@ -53,7 +53,7 @@ df.columns
 
 # ### checking the datatype
 
-# In[7]:
+# In[55]:
 
 
 df.dtypes
@@ -61,7 +61,7 @@ df.dtypes
 
 # ### Changing the datatype of date column
 
-# In[8]:
+# In[56]:
 
 
 df['year'] = pd.to_datetime(df['year'], format='%Y').dt.year
@@ -71,13 +71,13 @@ df.head()
 
 # ### Handling Duplicates
 
-# In[9]:
+# In[57]:
 
 
 df.duplicated().sum()
 
 
-# In[10]:
+# In[58]:
 
 
 df = df.drop_duplicates()
@@ -88,7 +88,7 @@ df.shape
 
 # ### Handling null values
 
-# In[11]:
+# In[59]:
 
 
 nv = df.isnull().sum()
@@ -98,14 +98,14 @@ nv
 
 # ### No missing values are observed in the dataset
 
-# In[12]:
+# In[60]:
 
 
 # Generate summary statistics for numerical columns
 print(df.describe())
 
 
-# In[13]:
+# In[61]:
 
 
 # Bar plot for the fuel column
@@ -117,7 +117,7 @@ plt.title('Distribution of Fuel Types')
 plt.show()
 
 
-# In[14]:
+# In[62]:
 
 
 # Histogram for the 'selling_price' column
@@ -129,7 +129,7 @@ plt.title('Histogram of Selling Price')
 plt.show()
 
 
-# In[15]:
+# In[63]:
 
 
 # Box plot to identify potential outliers in 'selling_price'
@@ -140,19 +140,19 @@ plt.title('Box Plot: Selling Price')
 plt.show()
 
 
-# In[16]:
+# In[64]:
 
 
 sorted(df['selling_price'],reverse=True)
 
 
-# In[17]:
+# In[65]:
 
 
 df = df[~(df['selling_price']>=5500000) & (df['selling_price']<=8900000)]
 
 
-# In[18]:
+# In[66]:
 
 
 # Scatter plot for 'km_driven' vs. 'selling_price'
@@ -165,19 +165,19 @@ plt.grid(True)
 plt.show()
 
 
-# In[19]:
+# In[67]:
 
 
 sorted(df['km_driven'],reverse=True)
 
 
-# In[20]:
+# In[68]:
 
 
 df = df[~(df['km_driven']>=400000) & (df['km_driven']<=806599)]
 
 
-# In[21]:
+# In[69]:
 
 
 # Box plot for 'fuel' vs. 'selling_price'
@@ -189,7 +189,7 @@ plt.title('Box Plot: Fuel Type vs. Selling Price')
 plt.show()
 
 
-# In[22]:
+# In[70]:
 
 
 print(df.info())
@@ -197,13 +197,13 @@ cars_train = df[["year", "km_driven", "fuel", "seller_type", "transmission", "br
 print(df["brand"].head())
 
 
-# In[23]:
+# In[71]:
 
 
 from sklearn import preprocessing
 
 
-# In[24]:
+# In[72]:
 
 
 print(cars_train["seller_type"].unique())
@@ -213,7 +213,7 @@ cars_train["seller_type"] = le_seller.transform(cars_train["seller_type"])
 print(cars_train["seller_type"].head())
 
 
-# In[25]:
+# In[73]:
 
 
 print(cars_train["transmission"].unique())
@@ -223,7 +223,7 @@ cars_train["transmission"] = le_trans.transform(cars_train["transmission"])
 print(cars_train["transmission"].head())
 
 
-# In[26]:
+# In[74]:
 
 
 print(cars_train["fuel"].unique())
@@ -233,7 +233,7 @@ cars_train["fuel"] = le_fuel.transform(cars_train["fuel"])
 print(cars_train["fuel"].head())
 
 
-# In[27]:
+# In[75]:
 
 
 print(cars_train["owner"].unique())
@@ -243,7 +243,7 @@ cars_train["owner"] = le_owner.transform(cars_train["owner"])
 print(cars_train["owner"].head())
 
 
-# In[28]:
+# In[76]:
 
 
 le_brand = preprocessing.LabelEncoder()
@@ -252,7 +252,7 @@ cars_train["brand"] = le_brand.transform(cars_train["brand"])
 print(cars_train["brand"].head())
 
 
-# In[29]:
+# In[77]:
 
 
 y = df["selling_price"]
@@ -261,7 +261,7 @@ x = cars_train
 print(x.shape)
 
 
-# In[30]:
+# In[78]:
 
 
 from sklearn.model_selection import KFold
@@ -276,7 +276,7 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
 
 #  Apply Various Machine Learning Techniques
 
-# In[31]:
+# In[79]:
 
 
 from sklearn.linear_model import LinearRegression, Ridge, Lasso
@@ -299,7 +299,7 @@ model4.fit(x_train, y_train)
 
 # Creating Functions to compute Regression Evaluation Metrics
 
-# In[32]:
+# In[80]:
 
 
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
@@ -323,19 +323,19 @@ def mscore(model):
 
 # LinearRegression
 
-# In[33]:
+# In[81]:
 
 
 mscore(model1)
 
 
-# In[34]:
+# In[82]:
 
 
 ypred_model1 = model1.predict(x_test)
 
 
-# In[35]:
+# In[83]:
 
 
 reg_eval_metrics(y_test,ypred_model1)
@@ -343,19 +343,19 @@ reg_eval_metrics(y_test,ypred_model1)
 
 # RandomForestRegressor
 
-# In[36]:
+# In[84]:
 
 
 mscore(model2)
 
 
-# In[37]:
+# In[85]:
 
 
 ypred_model2 = model2.predict(x_test)
 
 
-# In[38]:
+# In[86]:
 
 
 reg_eval_metrics(y_test,ypred_model2)
@@ -363,19 +363,19 @@ reg_eval_metrics(y_test,ypred_model2)
 
 # Ridge
 
-# In[39]:
+# In[87]:
 
 
 mscore(model3)
 
 
-# In[40]:
+# In[88]:
 
 
 ypred_model3 = model3.predict(x_test)
 
 
-# In[41]:
+# In[89]:
 
 
 reg_eval_metrics(y_test,ypred_model3)
@@ -383,25 +383,25 @@ reg_eval_metrics(y_test,ypred_model3)
 
 # Lasso
 
-# In[42]:
+# In[90]:
 
 
 mscore(model4)
 
 
-# In[43]:
+# In[91]:
 
 
 ypred_model4 = model4.predict(x_test)
 
 
-# In[44]:
+# In[92]:
 
 
 reg_eval_metrics(y_test,ypred_model4)
 
 
-# In[47]:
+# In[93]:
 
 
 import joblib
@@ -410,7 +410,7 @@ car_price_prediction = 'best_model.pkl'
 joblib.dump(model2, car_price_prediction)
 
 
-# In[52]:
+# In[94]:
 
 
 # Load the saved model
@@ -451,13 +451,13 @@ print(predictions)
 
 
 
-# In[56]:
+# In[95]:
 
 
 import streamlit as st
 
 
-# In[59]:
+# In[96]:
 
 
 def main():
@@ -500,7 +500,7 @@ def main():
 
         le_owner = preprocessing.LabelEncoder()
         le_owner.fit(input_data["owner"])
-        input_data["owner"] = le_owneinput_data(new_dataset["owner"])
+        input_data["owner"] = le_owner.transform(input_data["owner"])
 
 
         le_brand = preprocessing.LabelEncoder()
@@ -508,10 +508,9 @@ def main():
         input_data["brand"] = le_brand.transform(input_data["brand"])
         
         # Make prediction using the loaded model
-        prediction = loaded_model.predict(encoded_data)
+        prediction = loaded_model.predict(input_data)
         st.success(f'Predicted Car Price: ₹{prediction[0]:,.2f}')
     
 if __name__ == '__main__':
     main()
-
 
